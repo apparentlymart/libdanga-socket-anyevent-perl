@@ -1,0 +1,4 @@
+lib/Danga/Socket/AnyEvent.pm
+t/00-use.t
+Makefile.PL
+MANIFEST
