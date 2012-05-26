@@ -852,6 +852,7 @@ sub push_back_read {
     my Danga::Socket $self = shift;
     my $buf = shift;
     push @{$self->{read_push_back}}, ref $buf ? $buf : \$buf;
+    $self->{event_watch} |= POLLIN;
     $PushBackSet{$self->{fd}} = $self;
 }
 
