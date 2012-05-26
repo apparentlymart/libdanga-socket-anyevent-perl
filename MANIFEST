@@ -1,4 +1,5 @@
 lib/Danga/Socket/AnyEvent.pm
 t/00-use.t
+t/12-closerace.t
 Makefile.PL
 MANIFEST
