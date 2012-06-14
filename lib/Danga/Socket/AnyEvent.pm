@@ -962,9 +962,15 @@ sub watch_read {
                 $self->event_read() unless $self->{closed};
             }),
         );
+        if ( $PushBackSet{$fd} ) {
+            $self->{event_watch} |= POLLIN;
+        }
     }
     else {
         $watchers->[0] = undef;
+        if ( $PushBackSet{$fd} ) {
+            $self->{event_watch} &= ~POLLIN;
+        }
     }
 }
 
