@@ -80,6 +80,7 @@ use bytes;
 use POSIX ();
 use Time::HiRes ();
 use AnyEvent;
+use Scalar::Util qw(refaddr);
 
 my $opt_bsd_resource = eval "use BSD::Resource; 1;";
 
@@ -136,7 +137,7 @@ our (
      %Profiling,                 # what => [ utime, stime, calls ]
      $DoneInit,                  # if we've done the one-time module init yet
      $LoopTimeout,               # timeout of event loop in milliseconds
-
+     $TimerCount,                # Used to give each timer a unique id
      );
 
 Reset();
@@ -306,7 +307,8 @@ sub AddTimer {
 
     my $timer = [ undef ];
 
-    my $key = "$timer"; # Just stringify the timer array to get our hash key
+    ++$TimerCount;
+    my $key = $TimerCount;
 
     my $cancel = sub {
         delete $Timers{$key};
